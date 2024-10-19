@@ -8,6 +8,10 @@ app.get("/",
     }
 )
 
+app.post("/",(req,res)=>{
+    console.log("This is a Peost req")
+})
+
 
 app.listen(5000,(req,res)=>{
     console.log("Server is Running on port 5000")
