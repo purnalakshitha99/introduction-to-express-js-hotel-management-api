@@ -18,8 +18,12 @@ app.post("/",(req,res)=>{
     console.log("This is a post request");
 
 
-    const message = req.body.name;
-    console.log(req.body.name)
+    const name = req.body.name;
+    console.log(name)
+
+    res.json({
+        name : {name}
+    })
 })
 
 
