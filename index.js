@@ -4,12 +4,22 @@ const app = express()
 
 app.get("/",
     (req,res)=>{
-        console.log("Hello world")
+        console.log("get request")
+
+
+        res.json({
+            message : "hi"
+        })
+
     }
 )
 
 app.post("/",(req,res)=>{
-    console.log("This is a Peost req")
+    console.log("This is a post request");
+
+
+    const message = req.body.name;
+    console.log(req.body.name)
 })
 
 
