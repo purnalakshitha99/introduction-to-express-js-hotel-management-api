@@ -5,7 +5,7 @@ import express from 'express'
 
 const app = express() 
 
-app.use(bodyParser.json())
+app.use(bodyParser.json())  //middleware
 
 app.get("/",
     (req,res)=>{
@@ -13,7 +13,7 @@ app.get("/",
 
 
         res.json({
-            message : "hi"
+            message : "this is response message"
         })
 
     }
@@ -24,10 +24,12 @@ app.post("/",(req,res)=>{
 
 
     const name = req.body.name;
-    console.log(name)
+
+    const message = "this is new :"+name
+    console.log(message)
 
     res.json({
-        name : {name}
+        message : message
     })
 })
 
