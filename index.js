@@ -25,10 +25,10 @@ app.post("/",(req,res)=>{
 
     const name = req.body.name;
 
-    const message = "this is new :"+name
+    const message = "this is new : "+name
     console.log(message)
 
-    res.json({
+    res.status(403).json({
         message : message
     })
 })
