@@ -28,11 +28,27 @@ app.post("/",(req,res)=>{
     const message = "this is new : "+name
     console.log(message)
 
-    res.status(403).json({
+    res.status(200).json({
         message : message
     })
 })
 
+
+app.get("/users/",(req,res)=>{
+    res.json({
+        output : "user request in get method"
+    })
+})
+
+app.post("/users/",(req,res)=>{
+
+    const name = req.body.name;
+
+    res.json({
+        message : "user create in post",
+        name : name
+    })
+})
 
 app.listen(5000,(req,res)=>{
     console.log("Server is Running on port 5000")
