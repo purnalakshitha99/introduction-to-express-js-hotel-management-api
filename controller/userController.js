@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const userSchema = mongoose.Schema()(
+const userSchema = mongoose.Schema(
 {
     email : {
         type : String,
@@ -20,9 +20,15 @@ const userSchema = mongoose.Schema()(
     password : {
         type : String,
         required : true
+    },
+    phoneNumber : {
+        type : Number
     }
 }
 )
+
+
+const user = mongoose.model("users",userSchema)  //user kiyana collection ekata ara hada gaththa userSchema sturcture eka da gannawa
 
 
 export function getUser(req,res){
