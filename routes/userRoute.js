@@ -24,4 +24,22 @@ userRouter.post("/",(req,res)=>{
     })
 })
 
+
+//user update part
+userRouter.put("/",(req,res)=>{
+
+    res.json({
+        message : "user put request "
+    })
+})
+
+
+//user delete part
+userRouter.delete("/",(req,res)=>{
+
+    res.json({
+        message : "user delete request"
+    })
+})
+
 export default userRouter;
