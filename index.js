@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser'
 import express from 'express'
 import userRouter from './routes/userRoute.js'
+import mongoose from 'mongoose'
 
 
 
@@ -12,6 +13,18 @@ app.use(bodyParser.json())  //middleware
 
 
 const connectiionString = "mongodb+srv://tester2:123@cluster0.wd7xl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+mongoose.connect(connectiionString).then(
+    ()=>{
+        console.log("connect to the database")
+    }
+).catch(
+    ()=>{
+        console.log("connection failed")
+    }
+)
+
+
 app.use("/api/users",userRouter)
 
 
