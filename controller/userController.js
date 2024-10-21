@@ -8,6 +8,9 @@ export function getUser(req,res){
 
 export function postUser(req,res){
 
+    const user = req.body
+    console.log(user)
+
     res.json({
         message : "user post request"
     })
