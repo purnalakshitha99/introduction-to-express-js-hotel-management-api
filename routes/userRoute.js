@@ -1,45 +1,23 @@
 import bodyParser from 'body-parser'
 import express from 'express'
+import { getUser,postUser,updateUser,deletUser } from '../controller/userController.js';
 
 const userRouter = express.Router();
 
 
 //user get part
-userRouter.get("/",(req,res)=>{
-
-    res.json({
-        message : "user get request"
-    })
-})
+userRouter.get("/",getUser)
 
 
 //user post part
-userRouter.post("/",(req,res)=>{
-
-    const name = req.body.name;
-
-    res.json({
-        message : "user post request",
-        name : name
-    })
-})
+userRouter.post("/",postUser)
 
 
 //user update part
-userRouter.put("/",(req,res)=>{
-
-    res.json({
-        message : "user put request "
-    })
-})
+userRouter.put("/",updateUser)
 
 
 //user delete part
-userRouter.delete("/",(req,res)=>{
-
-    res.json({
-        message : "user delete request"
-    })
-})
+userRouter.delete("/",deletUser)
 
 export default userRouter;
