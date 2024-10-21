@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser'
 import express from 'express'
-import { getUser,postUser,updateUser,deletUser } from '../controller/userController.js';
+import { getUser,postUser,updateUser,deletUser } from '../controller/userController.js';  //importing collection of function in single line
 
 const userRouter = express.Router();
 
