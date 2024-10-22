@@ -1,6 +1,4 @@
-
-
-
+import User from '../model/user.js'
 
 export function getUser(req,res){
 

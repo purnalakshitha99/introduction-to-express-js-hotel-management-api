@@ -27,5 +27,7 @@ const userSchema = mongoose.Schema(
     }
     )
     
-    
-   export default User = mongoose.model("users",userSchema)  //user kiyana collection ekata ara hada gaththa userSchema sturcture eka da gannawa
+    //user kiyana collection ekata ara hada gaththa userSchema sturcture eka da gannawa
+   const User = mongoose.model("users",userSchema)  
+
+   export default User;
