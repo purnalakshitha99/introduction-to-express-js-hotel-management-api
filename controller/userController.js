@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema(
 )
 
 
-const user = mongoose.model("users",userSchema)  //user kiyana collection ekata ara hada gaththa userSchema sturcture eka da gannawa
+const User = mongoose.model("users",userSchema)  //user kiyana collection ekata ara hada gaththa userSchema sturcture eka da gannawa
 
 
 export function getUser(req,res){
@@ -44,11 +44,24 @@ export function postUser(req,res){
     const user = req.body
     console.log(user)
 
-    
+    const newUser = new User(user); //collection eka use karala aluth user knk hada gannwa
 
-    res.json({
-        message : "user post request"
-    })
+    newUser.save().then(
+        ()=>{
+            console.log("user created succussfully")
+            res.json({
+                
+                message : "user created succussfully"
+            })
+        }
+    ).catch(
+                ()=>{
+                    res.json({
+                        message : "user creation failed"
+                    })
+                }
+            )
+    
 }
 
 export function updateUser(req,res){
