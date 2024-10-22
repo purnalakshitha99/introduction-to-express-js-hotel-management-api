@@ -39,14 +39,30 @@ export function postUser(req,res){
 
 export function updateUser(req,res){
 
+    
+
     res.json({
         message : "user update request"
     })
 }
 
-export function deletUser(req,res){
+export function deleteUser(req,res){
+    
+    const email = req.body.email;
 
-    res.json({
-        message : "user delete request"
-    })
+    User.deleteOne({email : email}).then(
+        ()=>{
+            res.json(
+                {
+                    message : "user delete successfully"
+                }
+            )
+        }
+    ).catch(
+        ()=>{
+            res.json({
+                message : "user delete failed"
+            })
+        }
+    )
 }
