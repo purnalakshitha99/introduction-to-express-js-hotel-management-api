@@ -2,10 +2,14 @@ import User from '../model/user.js'
 
 export function getUser(req,res){
 
-    res.json({
-        message : "user get request"
-    })
-}
+    User.find().then(
+    (userList)=>{
+
+        res.json({
+            list : userList
+        })
+    }
+)}
 
 
 export function postUser(req,res){
