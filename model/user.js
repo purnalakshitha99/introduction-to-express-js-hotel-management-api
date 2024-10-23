@@ -31,6 +31,16 @@ const userSchema = mongoose.Schema(
         phoneNumber : {
             type : Number,
             required : true
+        },
+        disabled : {
+            type : Boolean,
+            required : true,
+            default : false
+        },
+        emailVaerified : {
+            type : Boolean,
+            required : true,
+            default : false
         }
     }
     )
