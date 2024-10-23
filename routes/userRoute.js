@@ -20,4 +20,7 @@ userRouter.put("/",updateUser)
 //user delete part
 userRouter.delete("/",deleteUser)
 
+
+
+
 export default userRouter;

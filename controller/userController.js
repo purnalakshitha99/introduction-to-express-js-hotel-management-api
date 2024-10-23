@@ -1,3 +1,4 @@
+
 import User from '../model/user.js'
 
 export function getUser(req,res){
@@ -39,11 +40,10 @@ export function postUser(req,res){
 
 export function updateUser(req,res){
 
-    
-
     res.json({
         message : "user update request"
     })
+
 }
 
 export function deleteUser(req,res){
@@ -55,6 +55,7 @@ export function deleteUser(req,res){
             res.json(
                 {
                     message : "user delete successfully"
+
                 }
             )
         }
