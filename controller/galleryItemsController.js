@@ -10,16 +10,18 @@ export function postGalleryItem(req,res){
 
     newGalleryItem.save().then(
         ()=>{
-            console.log(galleryItems)
-            res,json({
+            console.log("gallery items creation suiccess")
+            res.json({
                 
                 message : "gallery item creation succesfully"
             })
         }
     ).catch(
-        ()=>{
+        (error)=>{
+            
             res.json({
-                error : "gallery item creation failed"
+                error : "gallery item creation failed",
+                message : error.message
             })
         }
     )
