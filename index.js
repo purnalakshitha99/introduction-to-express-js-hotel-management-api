@@ -2,6 +2,7 @@ import bodyParser from 'body-parser'
 import express from 'express'
 import userRouter from './routes/userRoute.js'
 import mongoose from 'mongoose'
+import galleryItemRoute from './routes/galleryItemRoute.js'
 
 
 
@@ -26,6 +27,7 @@ mongoose.connect(connectiionString).then(
 
 
 app.use("/api/users",userRouter)
+app.use("/api/galleryItems",galleryItemRoute)
 
 
 
