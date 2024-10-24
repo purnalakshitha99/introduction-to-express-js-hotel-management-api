@@ -63,7 +63,8 @@ export function loginUser(req,res){
             }else{
                 
                 res.json({
-                    message : "user found"
+                    message : "user found",
+                    user : user
                 })
             }
         }
