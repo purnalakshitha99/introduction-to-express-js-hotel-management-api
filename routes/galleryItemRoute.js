@@ -1,5 +1,4 @@
 import express from 'express'
-import mongoose from 'mongoose'
 import { getGalleryItem, postGalleryItem } from '../controller/galleryItemsController.js';
 
 

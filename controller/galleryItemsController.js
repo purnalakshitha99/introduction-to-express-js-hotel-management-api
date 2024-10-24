@@ -19,7 +19,7 @@ export function postGalleryItem(req,res){
     ).catch(
         (error)=>{
             
-            res.json({
+            res.status(500).json({
                 error : "gallery item creation failed",
                 message : error.message
             })
