@@ -1,6 +1,6 @@
-import bodyParser from 'body-parser'
+
 import express from 'express'
-import { getUser,postUser,updateUser,deleteUser } from '../controller/userController.js';  //importing collection of function in single line
+import { getUser,postUser,updateUser,deleteUser, loginUser } from '../controller/userController.js';  //importing collection of function in single line
 
 const userRouter = express.Router();
 
@@ -19,6 +19,9 @@ userRouter.put("/",updateUser)
 
 //user delete part
 userRouter.delete("/",deleteUser)
+
+//user login
+userRouter.post("/loginUser",loginUser)
 
 
 

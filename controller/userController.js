@@ -2,12 +2,19 @@
 import User from '../model/user.js'
 
 export function getUser(req,res){
-
+    console.log("get user")
     User.find().then(
     (userList)=>{
 
         res.json({
             list : userList
+        })
+    }
+).catch(
+    (error)=>{
+        res.json({
+            message : "get failed",
+            details : error.message
         })
     }
 )}
@@ -53,6 +60,11 @@ export function loginUser(req,res){
                         message : "User not found"
                     }
                 )
+            }else{
+                
+                res.json({
+                    message : "user found"
+                })
             }
         }
     )
