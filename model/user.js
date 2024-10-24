@@ -3,9 +3,11 @@ import mongoose from "mongoose"
 const userSchema = mongoose.Schema(
     {
         email : {
+            
             type : String,
             required : true,
-            unique : true
+            unique: true,
+            
         },
         password : {
             type : String,
@@ -45,6 +47,10 @@ const userSchema = mongoose.Schema(
     }
     )
     
+    // Create the index if it doesn't exis
+    userSchema.index({ email: 1 }, { unique: true });
+
+
     //user kiyana collection ekata ara hada gaththa userSchema sturcture eka da gannawa
    const User = mongoose.model("users",userSchema)  
 

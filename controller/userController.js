@@ -22,6 +22,7 @@ export function postUser(req,res){
 
     newUser.save().then(
         ()=>{
+            console.log(user.email)
             console.log("user created succussfully")
             res.json({
                 
@@ -29,13 +30,32 @@ export function postUser(req,res){
             })
         }
     ).catch(
-                ()=>{
-                    res.json({
-                        message : "user creation failed"
+                (error)=>{
+                    res.status(500).json({
+                        message : "user creation failed",
+                        details : error.message
                     })
                 }
             )
     
+}
+
+export function loginUser(req,res){
+
+    const credential = req.body
+
+    User.findOne({email : credential.email, password : credential.password}).then(
+        (user)=>{
+            if(user == null){
+                
+                res.status(404).json(
+                    {
+                        message : "User not found"
+                    }
+                )
+            }
+        }
+    )
 }
 
 export function updateUser(req,res){
