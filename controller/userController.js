@@ -70,10 +70,13 @@ export function loginUser(req,res){
                     lastName : user.lastName,
                     type : user.type
                 }
+
+                const token = jwt.sign(payload,"secret",{expiresIn:"1h"});
                 
                 res.json({
                     message : "user found",
-                    user : user
+                    user : user,
+                    token : token
                 })
             }
         }
