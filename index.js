@@ -3,6 +3,8 @@ import express from 'express'
 import userRouter from './routes/userRoute.js'
 import mongoose from 'mongoose'
 import galleryItemRoute from './routes/galleryItemRoute.js'
+import jwt, { decode } from "jsonwebtoken"
+import e from 'express'
 
 
 
@@ -14,6 +16,41 @@ app.use(bodyParser.json())  //middleware
 
 
 const connectiionString = "mongodb+srv://tester2:123@cluster0.wd7xl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+app.use((req,res,next)=>{
+
+    const token = req.header("Authorization")?.replace("Bearer ","");  //methanadi authentication header ekak thiyen req ekaka Bearer kotasa iwath kara ithuru kalla const token ekata replace kara gani
+
+    if(token != null){
+
+        jwt.verify(token,"secret",(err,decode)=>{
+
+            if(decode != null){
+                req.user = decode
+                console.log(decode)
+                next()
+            }
+        })
+    }
+});
+
+// app.use((req,res,next)=>{
+    
+//     const token = req.header("Authorization")?.replace("Bearer","");
+
+//     if(token != null){
+//         jwt.verify(token,"secret",(err,decode)=>{
+
+//             if(decode != null){
+//                 req.user = decode
+//                 console.log(decode)
+//                 next()
+//             }
+//         })
+//     }
+// })
+
+
 
 mongoose.connect(connectiionString).then(
     ()=>{
