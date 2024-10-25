@@ -17,6 +17,7 @@ app.use(bodyParser.json())  //middleware
 
 const connectiionString = "mongodb+srv://tester2:123@cluster0.wd7xl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
+//authentication middleware
 app.use((req,res,next)=>{
 
     const token = req.header("Authorization")?.replace("Bearer ","");  //methanadi authentication header ekak thiyen req ekaka Bearer kotasa iwath kara ithuru kalla const token ekata replace kara gani
@@ -26,8 +27,8 @@ app.use((req,res,next)=>{
         jwt.verify(token,"secret",(err,decode)=>{
 
             if(decode != null){
-                req.user = decode
-                console.log(decode)
+                req.body.user = decode
+                console.log(req.user)
                 next()
             }
         })
