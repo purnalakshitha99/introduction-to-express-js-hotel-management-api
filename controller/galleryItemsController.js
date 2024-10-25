@@ -10,6 +10,14 @@ export function postGalleryItem(req, res) {
         });
     }
 
+    if(user.type != "admin"){
+        return res.status(403).json(
+            {
+                message : "cant access for create item"
+            }
+        )
+    }
+
     const galleryItems = req.body.item;
     console.log(galleryItems);
 
