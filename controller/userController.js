@@ -1,5 +1,6 @@
 
 import User from '../model/user.js'
+import jwt from 'jsonwebtoken'
 
 export function getUser(req,res){
     console.log("get user")
@@ -61,6 +62,14 @@ export function loginUser(req,res){
                     }
                 )
             }else{
+
+                const payload = {
+                    id : user._id,
+                    email : user.email,
+                    firstName : user.firstName,
+                    lastName : user.lastName,
+                    type : user.type
+                }
                 
                 res.json({
                     message : "user found",
