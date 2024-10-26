@@ -89,6 +89,22 @@ export function deleteCategory(req,res){
 
     const categoryName = req.body.name;
 
+    const user = req.body.user;
+
+    if (user == null) {
+        return res.status(403).json({
+            message: "Please login to delete a category item"
+        });
+    }
+
+    if (user.type != "admin") {
+        return res.status(403).json(
+            {
+                message: "cant access for create category"
+            }
+        )
+    }
+
     Category.deleteOne({ name : categoryName}).then(
         ()=>{
             return res.json(
