@@ -77,6 +77,7 @@ mongoose.connect(connectiionString).then(
 
 app.use("/api/users", userRouter)
 app.use("/api/galleryItems", galleryItemRoute)
+app.use("/api/category", galleryItemRoute)
 
 
 
