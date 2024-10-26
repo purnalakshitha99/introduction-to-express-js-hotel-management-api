@@ -3,42 +3,6 @@ import User from '../model/user.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
-export function getUser(req, res) {
-
-    const user = req.body.user
-    console.log(user)
-
-    if(user == null){
-        return res.status(404).json({
-            message : "user not found"
-        })
-    }
-
-    if(user.type != "admin"){
-        return res.status(403).json({
-            message : "only admin can get users"
-        })
-    }
-
-    console.log("get user")
-    User.find().then(
-        (userList) => {
-
-            res.json({
-                list: userList
-            })
-        }
-    ).catch(
-        (error) => {
-            res.json({
-                message: "get failed",
-                details: error.message
-            })
-        }
-    )
-}
-
-
 export function postUser(req, res) {
     const user = req.body;
     console.log("User data received:", user);
@@ -80,7 +44,6 @@ export function postUser(req, res) {
             });
     });
 }
-
 
 export function loginUser(req, res) {
 
@@ -135,7 +98,41 @@ export function loginUser(req, res) {
         }
     )
 }
-    
+
+export function getUser(req, res) {
+
+    const user = req.body.user
+    console.log(user)
+
+    if(user == null){
+        return res.status(404).json({
+            message : "user not found"
+        })
+    }
+
+    if(user.type != "admin"){
+        return res.status(403).json({
+            message : "only admin can get users"
+        })
+    }
+
+    console.log("get user")
+    User.find().then(
+        (userList) => {
+
+            res.json({
+                list: userList
+            })
+        }
+    ).catch(
+        (error) => {
+            res.json({
+                message: "get failed",
+                details: error.message
+            })
+        }
+    )
+}
 
 
 export function updateUser(req, res) {

@@ -8,7 +8,7 @@ import e from 'express'
 
 
 
-const app = express() 
+const app = express()
 
 
 
@@ -18,36 +18,36 @@ app.use(bodyParser.json())  //middleware
 const connectiionString = "mongodb+srv://tester2:123@cluster0.wd7xl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 //authentication middleware
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
 
-    const token = req.header("Authorization")?.replace("Bearer ","");  //methanadi authentication header ekak thiyen req ekaka Bearer kotasa iwath kara ithuru kalla const token ekata replace kara gani
+    const token = req.header("Authorization")?.replace("Bearer ", "");  //methanadi authentication header ekak thiyen req ekaka Bearer kotasa iwath kara ithuru kalla const token ekata replace kara gani
 
-    if(token != null){
+    if (token != null) {
 
-        
-        jwt.verify(token,"secret",(err,decode)=>{
-           
+
+        jwt.verify(token, "secret", (err, decode) => {
+
             //check the token valid
-            if(err){
+            if (err) {
                 return res.status(403).json({
-                    Message : err.message
+                    Message: err.message
                 })
             }
 
-            if(decode != null){
+            if (decode != null) {
                 req.body.user = decode
                 console.log(req.user)
                 next()
             }
         })
-    }else{
+    } else {
         next()
     }
-    
+
 });
 
 // app.use((req,res,next)=>{
-    
+
 //     const token = req.header("Authorization")?.replace("Bearer","");
 
 //     if(token != null){
@@ -65,24 +65,24 @@ app.use((req,res,next)=>{
 
 
 mongoose.connect(connectiionString).then(
-    ()=>{
+    () => {
         console.log("connect to the database")
     }
 ).catch(
-    ()=>{
+    () => {
         console.log("connection failed")
     }
 )
 
 
-app.use("/api/users",userRouter)
-app.use("/api/galleryItems",galleryItemRoute)
+app.use("/api/users", userRouter)
+app.use("/api/galleryItems", galleryItemRoute)
 
 
 
-app.listen(5000,(req,res)=>{
+app.listen(5000, (req, res) => {
     console.log("Server is Running on port 5000")
-}); 
+});
 
 
 
