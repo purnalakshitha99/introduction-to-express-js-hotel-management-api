@@ -49,7 +49,7 @@ export function loginUser(req, res) {
 
     const credential = req.body
 
-    console.log("credential password : "+credential.password)
+    console.log("credential password : " + credential.password)
 
 
 
@@ -64,7 +64,7 @@ export function loginUser(req, res) {
                 )
             } else {
 
-                console.log("user password in db : ",user.password)
+                console.log("user password in db : ", user.password)
 
                 const isPasswordValid = bcrypt.compare(credential.password, user.password);  //methanadi api dena password eka automa hash karagena user password ekth ekka compaire karala harida balayi
 
@@ -104,15 +104,15 @@ export function getUser(req, res) {
     const user = req.body.user
     console.log(user)
 
-    if(user == null){
+    if (user == null) {
         return res.status(404).json({
-            message : "user not found"
+            message: "user not found"
         })
     }
 
-    if(user.type != "admin"){
+    if (user.type != "admin") {
         return res.status(403).json({
-            message : "only admin can get users"
+            message: "only admin can get users"
         })
     }
 
@@ -130,6 +130,26 @@ export function getUser(req, res) {
                 message: "get failed",
                 details: error.message
             })
+        }
+    )
+}
+
+export function getUserByEmail(req,res){
+
+    const email = req.body.email;
+
+    User.findOne({ email: email}).then(
+        (user)=>{
+            if(!user){
+                return res.status(404).json({
+                    message : "user Not found"
+                })
+            }
+            return res.json({
+                message : "user found",
+                user : user
+            })
+            
         }
     )
 }
