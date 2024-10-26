@@ -44,3 +44,22 @@ export function createCategory(req, res) {
     )
 
 }
+
+export function getCategory(req,res){
+
+    Category.find().then(
+        (categoryList)=>{
+            return res.json({
+                message: "categories found",
+                category : categoryList
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(404).json({
+                message : "categories not found",
+                details : err.message
+            })
+        }
+    )
+}
