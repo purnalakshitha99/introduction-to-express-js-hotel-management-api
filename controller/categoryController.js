@@ -84,3 +84,26 @@ export function findCategoryByName(req, res) {
         }
     )
 }
+
+export function deleteCategory(req,res){
+
+    const categoryName = req.body.name;
+
+    Category.deleteOne({ name : categoryName}).then(
+        ()=>{
+            return res.json(
+                {
+                    message : "Delete category success"
+                }
+            )
+        }
+    ).catch(
+        (err)=>{
+            return res.status(404).json({
+                message : "Delete category failed",
+                details : err.message
+            })
+        }
+    )
+
+}
