@@ -4,6 +4,22 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
 export function getUser(req, res) {
+
+    const user = req.body.user
+    console.log(user)
+
+    if(user == null){
+        return res.status(404).json({
+            message : "user not found"
+        })
+    }
+
+    if(user.type != "admin"){
+        return res.status(403).json({
+            message : "only admin can get users"
+        })
+    }
+
     console.log("get user")
     User.find().then(
         (userList) => {
@@ -70,9 +86,7 @@ export function loginUser(req, res) {
 
     const credential = req.body
 
-    console.log(credential)
-
-    const enteredPassword = credential.password;
+    console.log("credential password : "+credential.password)
 
 
 
@@ -87,7 +101,9 @@ export function loginUser(req, res) {
                 )
             } else {
 
-                const isPasswordValid = bcrypt.compare(credential.password, user.password);
+                console.log("user password in db : ",user.password)
+
+                const isPasswordValid = bcrypt.compare(credential.password, user.password);  //methanadi api dena password eka automa hash karagena user password ekth ekka compaire karala harida balayi
 
                 if (!isPasswordValid) {
 
@@ -103,7 +119,7 @@ export function loginUser(req, res) {
                         type: user.type
                     }
 
-                    const token = jwt.sign(payload, "secret", { expiresIn: "1h" });
+                    const token = jwt.sign(payload, "secret", { expiresIn: "24h" });
 
                     return res.json({
                         message: "user found",

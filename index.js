@@ -24,7 +24,15 @@ app.use((req,res,next)=>{
 
     if(token != null){
 
+        
         jwt.verify(token,"secret",(err,decode)=>{
+           
+            //check the token valid
+            if(err){
+                return res.status(403).json({
+                    Message : err.message
+                })
+            }
 
             if(decode != null){
                 req.body.user = decode
