@@ -45,41 +45,41 @@ export function createCategory(req, res) {
 
 }
 
-export function getCategory(req,res){
+export function getCategory(req, res) {
 
     Category.find().then(
-        (categoryList)=>{
+        (categoryList) => {
             return res.json({
                 message: "categories found",
-                category : categoryList
+                category: categoryList
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(404).json({
-                message : "categories not found",
-                details : err.message
+                message: "categories not found",
+                details: err.message
             })
         }
     )
 }
 
-export function findCategoryByName(req,res){
+export function findCategoryByName(req, res) {
 
     const categoryName = req.body.name;
 
-    Category.findOne({name : categoryName}).then(
-        (category)=>{
+    Category.findOne({ name: categoryName }).then(
+        (category) => {
             return res.json({
-                message : "Category found",
-                category : category
+                message: "Category found",
+                category: category
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(404).json({
-                message : "Category not found",
-                err : err.message
+                message: "Category not found",
+                err: err.message
             })
         }
     )
