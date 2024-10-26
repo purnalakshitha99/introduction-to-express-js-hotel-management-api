@@ -156,12 +156,31 @@ export function getUserByEmail(req,res){
 
 
 export function updateUser(req, res) {
+    const email = req.body.email;
+    const updatedData = req.body; // The data to update
 
-    res.json({
-        message: "user update request"
-    })
-
+    // Find the user by email and update fields provided in updatedData
+    User.findOneAndUpdate({ email: email }, updatedData, { new: true, runValidators: true })
+        .then((updatedUser) => {
+            if (!updatedUser) {
+                return res.status(404).json({
+                    message: "User not found",
+                });
+            }
+            res.json({
+                message: "User updated successfully",
+                user: updatedUser
+            });
+        })
+        .catch((error) => {
+            console.error("Error updating user:", error);
+            res.status(500).json({
+                message: "User update failed",
+                details: error.message
+            });
+        });
 }
+
 
 export function deleteUser(req, res) {
 
