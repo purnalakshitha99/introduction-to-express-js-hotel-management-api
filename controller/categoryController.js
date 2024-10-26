@@ -63,3 +63,24 @@ export function getCategory(req,res){
         }
     )
 }
+
+export function findCategoryByName(req,res){
+
+    const categoryName = req.body.name;
+
+    Category.findOne({name : categoryName}).then(
+        (category)=>{
+            return res.json({
+                message : "Category found",
+                category : category
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(404).json({
+                message : "Category not found",
+                err : err.message
+            })
+        }
+    )
+}
