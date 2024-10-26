@@ -1,6 +1,7 @@
 
 import User from '../model/user.js'
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
 export function getUser(req,res){
     console.log("get user")
@@ -21,32 +22,48 @@ export function getUser(req,res){
 )}
 
 
-export function postUser(req,res){
+export function postUser(req, res) {
+    const user = req.body;
+    console.log("User data received:", user);
 
-    const user = req.body
-    console.log(user)
+    const saltRounds = 10;
+    const plainTextPassword = user.password;
 
-    const newUser = new User(user); //collection eka use karala aluth user knk hada gannwa
-
-    newUser.save().then(
-        ()=>{
-            console.log(user.email)
-            console.log("user created succussfully")
-            res.json({
-                
-                message : "user created succussfully"
-            })
+    // Hash the password and wait for it to finish
+    bcrypt.hash(plainTextPassword, saltRounds, (err, hashedPassword) => {
+        if (err) {
+            console.error("Error hashing password:", err);
+            return res.status(500).json({
+                message: "Password hashing failed",
+                details: err.message
+            });
         }
-    ).catch(
-                (error)=>{
-                    res.status(500).json({
-                        message : "user creation failed",
-                        details : error.message
-                    })
-                }
-            )
-    
+
+        // Set the hashed password
+        user.password = hashedPassword;
+        console.log("Hashed password:", user.password);
+
+        // Create a new user with the hashed password
+        const newUser = new User(user);
+
+        // Save the new user to the database
+        newUser.save()
+            .then(() => {
+                console.log("User created successfully:", user.email);
+                res.json({
+                    message: "User created successfully"
+                });
+            })
+            .catch((error) => {
+                console.error("Error saving user:", error);
+                res.status(500).json({
+                    message: "User creation failed",
+                    details: error.message
+                });
+            });
+    });
 }
+
 
 export function loginUser(req,res){
 

@@ -3,7 +3,7 @@ import GalleryItem from "../model/galleryItems.js";
 
 export function postGalleryItem(req, res) {
     const user = req.body.user;
-    
+     
     if (user == null) {
         return res.status(403).json({
             message: "Please login to create a gallery item"
