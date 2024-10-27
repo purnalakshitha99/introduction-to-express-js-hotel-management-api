@@ -5,7 +5,6 @@ import mongoose from 'mongoose'
 import galleryItemRoute from './routes/galleryItemRoute.js'
 import categoryRoute from './routes/categoryRoute.js'
 import jwt, { decode } from "jsonwebtoken"
-import e from 'express'
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -30,7 +29,7 @@ app.use((req, res, next) => {
     if (token != null) {
 
 
-        jwt.verify(token, "secret", (err, decode) => {
+        jwt.verify(token, process.env.JWT_KEY, (err, decode) => {
 
             //check the token valid
             if (err) {
