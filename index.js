@@ -6,7 +6,8 @@ import galleryItemRoute from './routes/galleryItemRoute.js'
 import categoryRoute from './routes/categoryRoute.js'
 import jwt, { decode } from "jsonwebtoken"
 import e from 'express'
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const app = express()
@@ -16,7 +17,10 @@ const app = express()
 app.use(bodyParser.json())  //middleware
 
 
-const connectiionString = "mongodb+srv://tester2:123@cluster0.wd7xl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const connectiionString = process.env.MONGO_URL;
+
+
+console.log("Mongo URL:", connectiionString);
 
 //authentication middleware
 app.use((req, res, next) => {
