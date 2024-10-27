@@ -15,6 +15,12 @@ const categorySchema = mongoose.Schema(
         price : {
             type : Number,
             required : true
+        },
+        features : [{
+            type : String,
+        }],
+        image : {
+            type : String
         }
     }
 )
