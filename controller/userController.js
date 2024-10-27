@@ -2,6 +2,8 @@
 import User from '../model/user.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
+import dotenv from 'dotenv'
+dotenv.config()
 
 export function postUser(req, res) {
     const user = req.body;
@@ -82,7 +84,7 @@ export function loginUser(req, res) {
                         type: user.type
                     }
 
-                    const token = jwt.sign(payload, "secret", { expiresIn: "24h" });
+                    const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: "24h" });
 
                     return res.json({
                         message: "user found",
