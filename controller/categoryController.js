@@ -151,6 +151,8 @@ export function deleteCategoryByParam(req,res){
 
     const categoryName = req.params.name;
 
+    console.log("category name : ",categoryName)
+
     const user = req.body.user;
 
     if (user == null) {
@@ -167,18 +169,21 @@ export function deleteCategoryByParam(req,res){
         )
     }
 
-    Category.deleteOne({ name : categoryName}).then(
-        ()=>{
-            return res.json(
-                {
-                    message : "Delete category success"
-                }
-            )
+    Category.findOneAndDelete({ name : categoryName}).then(
+        (category)=>{
+            if(!category){
+                return res.status(404).json({
+                    message : "category not found , delete failed"
+                })
+            }
+            return res.json({
+                message : "category found , delete successfully"
+            })
         }
     ).catch(
         (err)=>{
-            return res.status(404).json({
-                message : "Delete category failed",
+            return res.status(500).json({
+                message : "delete category failed",
                 details : err.message
             })
         }
