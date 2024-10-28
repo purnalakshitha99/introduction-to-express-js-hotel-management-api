@@ -86,6 +86,28 @@ export function findCategoryByName(req, res) {
     )
 }
 
+export function findCategory(req,res){
+
+    const name = req.params.name;
+
+    Category.find({name}).then(
+        (category)=>{
+            return res.json({
+                message : "category found",
+                category : category
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(404).json({
+                message : "category not found",
+                err : err.message
+            })
+        }
+    )
+   
+}
+
 export function deleteCategory(req,res){
 
     const categoryName = req.body.name;
