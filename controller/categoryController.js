@@ -71,6 +71,12 @@ export function findCategoryByName(req, res) {
 
     Category.findOne({ name: categoryName }).then(
         (category) => {
+            if(!category){
+                return res.status(404).json({
+                    message: "Category not found",
+                    err: err.message
+                })
+            }
             return res.json({
                 message: "Category found",
                 category: category
@@ -78,7 +84,7 @@ export function findCategoryByName(req, res) {
         }
     ).catch(
         (err) => {
-            return res.status(404).json({
+            return res.status(500).json({
                 message: "Category not found",
                 err: err.message
             })
@@ -128,18 +134,21 @@ export function deleteCategory(req,res){
         )
     }
 
-    Category.deleteOne({ name : categoryName}).then(
-        ()=>{
-            return res.json(
-                {
-                    message : "Delete category success"
-                }
-            )
+    Category.findOneAndDelete({ name : categoryName}).then(
+        (category)=>{
+            if(!category){
+                return res.status(404).json({
+                    message : "category not found , delete failed"
+                })
+            }
+            return res.json({
+                message : "category found , delete successfully"
+            })
         }
     ).catch(
         (err)=>{
-            return res.status(404).json({
-                message : "Delete category failed",
+            return res.status(500).json({
+                message : "delete category failed",
                 details : err.message
             })
         }
