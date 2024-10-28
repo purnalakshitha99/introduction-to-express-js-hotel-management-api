@@ -15,6 +15,15 @@ const categorySchema = mongoose.Schema(
         price : {
             type : Number,
             required : true
+        },
+
+        //features array ekak lesa save kirima
+        features : [{
+            type : String,
+        }],
+        
+        image : {
+            type : String
         }
     }
 )

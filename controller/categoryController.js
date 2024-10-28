@@ -6,7 +6,7 @@ export function createCategory(req, res) {
     const user = req.body.user;
 
     if (user == null) {
-        return res.status(403).json({
+        return res.status(401).json({
             message: "Please login to create a category item"
         });
     }
@@ -19,17 +19,18 @@ export function createCategory(req, res) {
         )
     }
 
-    const category = req.body.category;
+    const category = req.body;
     console.log(category)
 
     const newCategory = new Category(category);
 
     newCategory.save().then(
-        () => {
+        (category) => {
             console.log("category creation success")
             return res.json(
                 {
-                    message: "Category creation Succuess"
+                    message: "Category creation Succuess",
+                    category : category
                 }
             );
         }
