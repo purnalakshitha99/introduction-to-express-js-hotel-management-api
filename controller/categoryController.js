@@ -96,18 +96,24 @@ export function findCategory(req,res){
 
     const name = req.params.name;
 
-    Category.find({name}).then(
-        (category)=>{
+    Category.findOne({ name: name }).then(
+        (category) => {
+            if(!category){
+                return res.status(404).json({
+                    message: "Category not found",
+                    err: err.message
+                })
+            }
             return res.json({
-                message : "category found",
-                category : category
+                message: "Category found",
+                category: category
             })
         }
     ).catch(
-        (err)=>{
-            return res.status(404).json({
-                message : "category not found",
-                err : err.message
+        (err) => {
+            return res.status(500).json({
+                message: "Category not found",
+                err: err.message
             })
         }
     )
