@@ -205,3 +205,48 @@ export function deleteCategoryByParam(req,res){
     )
 
 }
+
+
+export function updateCategory(req,res){
+    
+    const name = req.params.name;
+    const user = req.body.user;
+    const updateData = req.body;
+
+
+    if (user == null) {
+        return res.status(403).json({
+            message: "Please login to delete a category item"
+        });
+    }
+
+    if (user.type != "admin") {
+        return res.status(403).json(
+            {
+                message: "cant access for create category"
+            }
+        )
+    }
+    
+    Category.findOneAndUpdate({name : name},updateData,{new: true, runValidators : true}).then(
+        (updateCategory)=>{
+            if(!updateCategory){
+                return res.status(404).json({
+                    message : "category not found"
+                })
+            }
+            return res.json({
+                message : "category found",
+                category : updateCategory
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "category update failed",
+                details : err.message
+            })
+        }
+    )
+    
+}
