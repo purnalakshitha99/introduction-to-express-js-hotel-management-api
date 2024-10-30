@@ -4,7 +4,8 @@ const galleryItemSchema = mongoose.Schema(
     {
         name : {
             type : String,
-            required : true
+            required : true,
+            unique : true
         },
         image : {
             type : String,
