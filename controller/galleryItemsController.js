@@ -54,3 +54,38 @@ export function getGalleryItem(req,res){
         }
     )
 }
+
+export function getGalleryItemByName(req,res){
+
+    const name = req.params.name;
+    const user = req.body.user;
+
+    if(!user){
+        return res.status(403).json({
+            message : "please login"
+        })
+    }
+
+    GalleryItem.findOne({name}).then(
+        (galleryItem)=>{
+            if(!galleryItem){
+                return res.status(404).json(
+                    {
+                        message: "gallery item not found"
+                    }
+                )
+            }
+            return res.json({
+                message : "Gallery item found",
+                galleryItem : galleryItem
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message: "internal server error",
+                details : err.message
+            })
+        }
+    )
+}
