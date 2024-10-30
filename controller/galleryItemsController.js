@@ -89,3 +89,43 @@ export function getGalleryItemByName(req,res){
         }
     )
 }
+
+export function deleteByName(req,res){
+
+    const name = req.params.name
+    const user = req.body.user;
+     
+    if (user == null) {
+        return res.status(403).json({
+            message: "Please login to create a gallery item"
+        });
+    }
+
+    if(user.type != "admin"){
+        return res.status(403).json(
+            {
+                message : "cant access for create item"
+            }
+        )
+    }
+
+    GalleryItem.findOneAndDelete({name}).then(
+        (galleryItem)=>{
+            if(!galleryItem){
+                return res.status(404).json({
+                    message : "Gallery item not found"
+                })
+            }
+            return res.json({
+                message : "Delete successfully"
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "delete failed",
+                details : err.message
+            })
+        }
+    )
+}
