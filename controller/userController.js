@@ -2,26 +2,8 @@
 import User from '../model/user.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-
-export function getUser(req, res) {
-    console.log("get user")
-    User.find().then(
-        (userList) => {
-
-            res.json({
-                list: userList
-            })
-        }
-    ).catch(
-        (error) => {
-            res.json({
-                message: "get failed",
-                details: error.message
-            })
-        }
-    )
-}
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 export function postUser(req, res) {
     const user = req.body;
@@ -65,14 +47,11 @@ export function postUser(req, res) {
     });
 }
 
-
 export function loginUser(req, res) {
 
     const credential = req.body
 
-    console.log(credential)
-
-    const enteredPassword = credential.password;
+    console.log("credential password : " + credential.password)
 
 
 
@@ -87,7 +66,9 @@ export function loginUser(req, res) {
                 )
             } else {
 
-                const isPasswordValid = bcrypt.compare(credential.password, user.password);
+                console.log("user password in db : ", user.password)
+
+                const isPasswordValid = bcrypt.compare(credential.password, user.password);  //methanadi api dena password eka automa hash karagena user password ekth ekka compaire karala harida balayi
 
                 if (!isPasswordValid) {
 
@@ -103,7 +84,7 @@ export function loginUser(req, res) {
                         type: user.type
                     }
 
-                    const token = jwt.sign(payload, "secret", { expiresIn: "1h" });
+                    const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: "24h" });
 
                     return res.json({
                         message: "user found",
@@ -119,16 +100,89 @@ export function loginUser(req, res) {
         }
     )
 }
-    
+
+export function getUser(req, res) {
+
+    const user = req.body.user
+    console.log(user)
+
+    if (user == null) {
+        return res.status(403).json({
+            message: "please login"
+        })
+    }
+
+    if (user.type != "admin") {
+        return res.status(403).json({
+            message: "only admin can get users"
+        })
+    }
+
+    console.log("get user")
+    User.find().then(
+        (userList) => {
+
+            res.json({
+                list: userList
+            })
+        }
+    ).catch(
+        (error) => {
+            res.json({
+                message: "get failed",
+                details: error.message
+            })
+        }
+    )
+}
+
+export function getUserByEmail(req,res){
+
+    const email = req.body.email;
+
+    User.findOne({ email: email}).then(
+        (user)=>{
+            if(!user){
+                return res.status(404).json({
+                    message : "user Not found"
+                })
+            }
+            return res.json({
+                message : "user found",
+                user : user
+            })
+            
+        }
+    )
+}
 
 
 export function updateUser(req, res) {
+    const email = req.body.email;
+    const updatedData = req.body; // The data to update
 
-    res.json({
-        message: "user update request"
-    })
-
+    // Find the user by email and update fields provided in updatedData
+    User.findOneAndUpdate({ email: email }, updatedData, { new: true, runValidators: true })
+        .then((updatedUser) => {
+            if (!updatedUser) {
+                return res.status(404).json({
+                    message: "User not found",
+                });
+            }
+            res.json({
+                message: "User updated successfully",
+                user: updatedUser
+            });
+        })
+        .catch((error) => {
+            console.error("Error updating user:", error);
+            res.status(500).json({
+                message: "User update failed",
+                details: error.message
+            });
+        });
 }
+
 
 export function deleteUser(req, res) {
 
