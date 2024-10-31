@@ -107,8 +107,8 @@ export function getUser(req, res) {
     console.log(user)
 
     if (user == null) {
-        return res.status(404).json({
-            message: "user not found"
+        return res.status(403).json({
+            message: "please login"
         })
     }
 
