@@ -1,6 +1,8 @@
-import Room from "../model/room";
+import Room from "../model/room.js";
 
 export function createRoom(req,res){
+
+    const user = req.body.user
 
     if (user == null) {
         return res.status(401).json({

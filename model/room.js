@@ -44,6 +44,6 @@ const roomSchema = mongoose.Schema(
 )
 
 
-const Room = roomSchema.model("rooms",roomSchema);
+const Room = mongoose.model("rooms",roomSchema);
 
 export default Room;
