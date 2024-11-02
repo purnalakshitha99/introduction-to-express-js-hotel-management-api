@@ -43,3 +43,31 @@ export function createRoom(req,res){
         }
     )
 }
+
+export function getRooms(req,res){
+
+    const user = req.body.user
+
+    if (user == null) {
+        return res.status(401).json({
+            message: "Please login to create a room"
+        });
+    }
+
+
+    Room.find().then(
+        (roomList)=>{
+            if(!roomList){
+                return res.status(404).json(
+                    {
+                        message : "Room empty"
+                    }
+                )
+            }
+            res.json({
+                message : "Rooms Found",
+                roomList : roomList
+            })
+        }
+    )
+}

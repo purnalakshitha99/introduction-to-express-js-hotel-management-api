@@ -35,6 +35,7 @@ app.use((req, res, next) => {
             //check the token valid
             if (err) {
                 return res.status(403).json({
+                    details : "jwt token error",
                     Message: err.message
                 })
             }
