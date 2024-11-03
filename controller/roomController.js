@@ -100,6 +100,9 @@ export function deleteRoom(req,res){
                     message : "Room not found"
                 })
             }
+            return res.json({
+                message : "Delete successfully"
+            })
         }
     )
 }
