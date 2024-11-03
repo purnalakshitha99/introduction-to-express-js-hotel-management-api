@@ -104,5 +104,12 @@ export function deleteRoom(req,res){
                 message : "Delete successfully"
             })
         }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "delete failed from internal error",
+                details : err.message
+            })
+        }
     )
 }
