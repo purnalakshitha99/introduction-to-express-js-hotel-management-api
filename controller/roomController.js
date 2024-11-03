@@ -76,7 +76,9 @@ export function getRooms(req,res){
 export function deleteRoom(req,res){
 
     const user = req.body.user
-    const name = req.params.name
+    const id = req.body.id
+
+    console.log(id)
 
     if (user == null) {
         return res.status(401).json({
@@ -93,8 +95,9 @@ export function deleteRoom(req,res){
     }
 
 
-    Room.findOneAndDelete({name}).then(
+    Room.deleteOne({roomId : id}).then(
         (room)=>{
+            console.log(room)
             if(!room){
                 return res.status(404).json({
                     message : "Room not found"
