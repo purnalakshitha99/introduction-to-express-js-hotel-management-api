@@ -71,3 +71,35 @@ export function getRooms(req,res){
         }
     )
 }
+
+
+export function deleteRoom(req,res){
+
+    const user = req.body.user
+    const name = req.params.name
+
+    if (user == null) {
+        return res.status(401).json({
+            message: "Please login to create a room"
+        });
+    }
+
+    if (user.type != "admin") {
+        return res.status(403).json(
+            {
+                message: "cant access for create room"
+            }
+        )
+    }
+
+
+    Room.findOneAndDelete({name}).then(
+        (room)=>{
+            if(!room){
+                return res.status(404).json({
+                    message : "Room not found"
+                })
+            }
+        }
+    )
+}
