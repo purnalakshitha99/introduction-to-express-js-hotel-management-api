@@ -89,7 +89,7 @@ export function deleteRoom(req,res){
     if (user.type != "admin") {
         return res.status(403).json(
             {
-                message: "cant access for create room"
+                message: "Only admins can delete rooms"
             }
         )
     }
