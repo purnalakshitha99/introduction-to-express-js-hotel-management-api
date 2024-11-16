@@ -82,7 +82,7 @@ export function deleteRoom(req,res){
 
     if (user == null) {
         return res.status(401).json({
-            message: "Please login to create a room"
+            message: "Authentication required to delete a room"
         });
     }
 
