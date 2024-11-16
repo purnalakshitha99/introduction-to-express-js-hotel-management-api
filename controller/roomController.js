@@ -128,7 +128,7 @@ export function deleteRoomByParam(req,res){
             message : "Authentication required to delete a room"
         })
     }
-    if(user.type != "adimin"){
+    if(user.type != "admin"){
 
         console.log("********  "+user.type)
         return res.status(403).json({
