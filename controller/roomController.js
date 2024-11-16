@@ -82,14 +82,14 @@ export function deleteRoom(req,res){
 
     if (user == null) {
         return res.status(401).json({
-            message: "Please login to create a room"
+            message: "Authentication required to delete a room"
         });
     }
 
     if (user.type != "admin") {
         return res.status(403).json(
             {
-                message: "cant access for create room"
+                message: "Only admins can delete rooms"
             }
         )
     }
@@ -112,6 +112,45 @@ export function deleteRoom(req,res){
             return res.status(500).json({
                 message : "delete failed from internal error",
                 details : err.message
+            })
+        }
+    )
+}
+
+export function deleteRoomByParam(req,res){
+
+    const id = req.params.id;
+    const user = req.body.user;
+
+    if(!user){
+
+        return res.status(401).json({
+            message : "Authentication required to delete a room"
+        })
+    }
+    if(user.type != "admin"){
+
+        console.log("********  "+user.type)
+        return res.status(403).json({
+            message : "Only admins can delete rooms"
+        })
+    }
+
+    Room.findOneAndDelete({roomId : id}).then(
+        (room)=>{
+            if(!room){
+                return res.status(404).json({
+                    message : "Room Not Found"
+                })
+            }
+            return res.json({
+                message : "Room found and Delete successfully"
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "Room Deleted Failed"
             })
         }
     )
