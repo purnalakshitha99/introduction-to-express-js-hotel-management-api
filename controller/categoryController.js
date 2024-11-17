@@ -1,22 +1,13 @@
 import Category from "../model/category.js";
+import room from "./roomController.js"
 
 
 export function createCategory(req, res) {
 
-    const user = req.body.user;
+    const validUser = room.isUserValid(req, res)
 
-    if (user == null) {
-        return res.status(401).json({
-            message: "Please login to create a category item"
-        });
-    }
-
-    if (user.type != "admin") {
-        return res.status(403).json(
-            {
-                message: "cant access for create category"
-            }
-        )
+    if (!validUser) {
+        return
     }
 
     const category = req.body;
