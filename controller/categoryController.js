@@ -1,12 +1,12 @@
 import Category from "../model/category.js";
-import room from "./roomController.js"
+import { isAdmin,isUserValid } from './roomController.js';
 
 
 export function createCategory(req, res) {
 
-    const validUser = room.isUserValid(req, res)
+    const validAdmin = isAdmin(req, res)
 
-    if (!validUser) {
+    if (!validAdmin) {
         return
     }
 
