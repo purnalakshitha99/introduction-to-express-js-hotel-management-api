@@ -156,43 +156,39 @@ export function deleteRoomByParam(req,res){
     )
 }
 
-export function isAdminValid(req,res){
+// export function isAdminValid(req){
 
-    const id = req.params.id;
+//     const id = req.params.id;
 
-    console.log("id is : "+id)
-    const user = req.body.user;
+//     console.log("id is : "+id)
+//     const user = req.body.user;
 
-    if(!user){
+//     if(!user){
 
-        return res.status(401).json({
-            message : "authentication required"
-        })
-    }
-    if(user.type != "admin"){
+//        return false
+//     }
+//     if(user.type != "admin"){
 
-        console.log("********  "+user.type)
-        return res.status(403).json({
-            message : "Cant access for Doing the Task"
-        })
-    }
+//        return false
+//     }
 
-    return true
-}
+//     return true
+// }
 
 
 export function updateRoom(req,res){
 
-    const adminValid = isAdminValid(req,res);
-    const id = req.params.id;
+    const id = req.params.id
+   const isValid = isAdmin(req,res)
 
-    if(!adminValid){
-        return res.status(403).json({
-            message : "Unauthorized"
-        })
+    if( !isValid){
+        return
     }
 
-    Room.updateOne({roomId : id},req.body).then(
+   
+
+    
+        Room.updateOne({roomId : id},req.body).then(
         (result)=>{
            
             if(result.matchedCount === 0){
@@ -217,4 +213,30 @@ export function updateRoom(req,res){
         }
     )
 
+}
+
+export function isUserValid(req,res){
+
+    const user = req.body.user;
+
+    if(!user){
+        res.status(401).json({
+            message : "Authentication required"
+        })
+        return false
+    }
+    return true
+}
+
+export function isAdmin(req,res){
+
+    isUserValid(req,res);
+    
+    if(req.body.user.type != "admin"){
+         res.status(403).json({
+            message : "Only Admin can doing this task"
+        })
+        return false
+    }
+    return true
 }
