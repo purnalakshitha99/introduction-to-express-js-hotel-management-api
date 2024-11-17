@@ -194,6 +194,17 @@ export function updateRoom(req,res){
 
     Room.updateOne({roomId : id},req.body).then(
         (result)=>{
+           
+            if(result.matchedCount === 0){
+                return res.status(404).json({
+                    message: "Room not found"
+                });
+            }
+            if(result.modifiedCount === 0){
+                return res.status(404).json({
+                    message: "no changes made to the room"
+                });
+            }
             return res.json({
                 message : "Update Successfully"
             })
