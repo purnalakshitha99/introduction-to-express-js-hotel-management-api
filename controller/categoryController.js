@@ -115,20 +115,10 @@ export function deleteCategory(req,res){
 
     const categoryName = req.body.name;
 
-    const user = req.body.user;
+    const validAdmin = isAdmin(req, res)
 
-    if (user == null) {
-        return res.status(403).json({
-            message: "Please login to delete a category item"
-        });
-    }
-
-    if (user.type != "admin") {
-        return res.status(403).json(
-            {
-                message: "cant access for create category"
-            }
-        )
+    if (!validAdmin) {
+        return
     }
 
     Category.findOneAndDelete({ name : categoryName}).then(
