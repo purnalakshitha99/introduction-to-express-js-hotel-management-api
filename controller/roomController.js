@@ -155,3 +155,49 @@ export function deleteRoomByParam(req,res){
         }
     )
 }
+
+export function isAdminValid(req){
+
+    const id = req.params.id
+    const user = req.body.user;
+
+    if(!user){
+
+        return false
+    }
+    if(user.type != "admin"){
+
+        console.log("********  "+user.type)
+        return false
+    }
+
+    return true
+}
+
+
+export function updateRoom(req,res){
+
+    const adminValid = isAdminValid();
+    const id = req.params.id;
+
+    if(!adminValid){
+        return res.status(403).json({
+            message : "Unauthorized"
+        })
+    }
+
+    Room.updateOne({roomId : id},req.body).then(
+        (result)=>{
+            return res.json({
+                message : "Update Successfully"
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "failed the update"
+            })
+        }
+    )
+
+}
