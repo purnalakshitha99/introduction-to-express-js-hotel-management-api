@@ -75,23 +75,14 @@ export function getRooms(req, res) {
 
 export function deleteRoom(req, res) {
 
-    const user = req.body.user
     const id = req.body.id
 
     console.log(id)
 
-    if (user == null) {
-        return res.status(401).json({
-            message: "Authentication required to delete a room"
-        });
-    }
+    const isValid = isAdmin(req, res)
 
-    if (user.type != "admin") {
-        return res.status(403).json(
-            {
-                message: "Only admins can delete rooms"
-            }
-        )
+    if (!isValid) {
+        return
     }
 
 
