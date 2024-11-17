@@ -1,6 +1,6 @@
 import Room from "../model/room.js";
 
-export function createRoom(req,res){
+export function createRoom(req, res) {
 
     const user = req.body.user
 
@@ -24,12 +24,12 @@ export function createRoom(req,res){
     const newRoom = new Room(room);
 
     newRoom.save().then(
-        (room)=> {
+        (room) => {
             console.log("room creation success")
             return res.json(
                 {
                     message: "room creation Succuess",
-                    room : room
+                    room: room
                 }
             );
         }
@@ -44,7 +44,7 @@ export function createRoom(req,res){
     )
 }
 
-export function getRooms(req,res){
+export function getRooms(req, res) {
 
     const user = req.body.user
 
@@ -56,24 +56,24 @@ export function getRooms(req,res){
 
 
     Room.find().then(
-        (roomList)=>{
-            if(!roomList){
+        (roomList) => {
+            if (!roomList) {
                 return res.status(404).json(
                     {
-                        message : "Room empty"
+                        message: "Room empty"
                     }
                 )
             }
             res.json({
-                message : "Rooms Found",
-                roomList : roomList
+                message: "Rooms Found",
+                roomList: roomList
             })
         }
     )
 }
 
 
-export function deleteRoom(req,res){
+export function deleteRoom(req, res) {
 
     const user = req.body.user
     const id = req.body.id
@@ -95,146 +95,116 @@ export function deleteRoom(req,res){
     }
 
 
-    Room.deleteOne({roomId : id}).then(
-        (room)=>{
+    Room.deleteOne({ roomId: id }).then(
+        (room) => {
             console.log(room)
-            if(!room){
+            if (!room) {
                 return res.status(404).json({
-                    message : "Room not found"
+                    message: "Room not found"
                 })
             }
             return res.json({
-                message : "Delete successfully"
+                message: "Delete successfully"
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "delete failed from internal error",
-                details : err.message
+                message: "delete failed from internal error",
+                details: err.message
             })
         }
     )
 }
 
-export function deleteRoomByParam(req,res){
+export function deleteRoomByParam(req, res) {
 
     const id = req.params.id;
     const user = req.body.user;
 
-    if(!user){
+    const isValid = isAdmin(req, res)
 
-        return res.status(401).json({
-            message : "Authentication required to delete a room"
-        })
-    }
-    if(user.type != "admin"){
-
-        console.log("********  "+user.type)
-        return res.status(403).json({
-            message : "Only admins can delete rooms"
-        })
+    if (!isValid) {
+        return
     }
 
-    Room.findOneAndDelete({roomId : id}).then(
-        (room)=>{
-            if(!room){
+    Room.findOneAndDelete({ roomId: id }).then(
+        (room) => {
+            if (!room) {
                 return res.status(404).json({
-                    message : "Room Not Found"
+                    message: "Room Not Found"
                 })
             }
             return res.json({
-                message : "Room found and Delete successfully"
+                message: "Room found and Delete successfully"
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "Room Deleted Failed"
+                message: "Room Deleted Failed"
             })
         }
     )
 }
 
-// export function isAdminValid(req){
-
-//     const id = req.params.id;
-
-//     console.log("id is : "+id)
-//     const user = req.body.user;
-
-//     if(!user){
-
-//        return false
-//     }
-//     if(user.type != "admin"){
-
-//        return false
-//     }
-
-//     return true
-// }
 
 
-export function updateRoom(req,res){
+export function updateRoom(req, res) {
 
     const id = req.params.id
-   const isValid = isAdmin(req,res)
+    const isValid = isAdmin(req, res)
 
-    if( !isValid){
+    if (!isValid) {
         return
     }
+    Room.updateOne({ roomId: id }, req.body).then(
+        (result) => {
 
-   
-
-    
-        Room.updateOne({roomId : id},req.body).then(
-        (result)=>{
-           
-            if(result.matchedCount === 0){
+            if (result.matchedCount === 0) {
                 return res.status(404).json({
                     message: "Room not found"
                 });
             }
-            if(result.modifiedCount === 0){
+            if (result.modifiedCount === 0) {
                 return res.status(404).json({
                     message: "no changes made to the room"
                 });
             }
             return res.json({
-                message : "Update Successfully"
+                message: "Update Successfully"
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "failed the update"
+                message: "failed the update"
             })
         }
     )
 
 }
 
-export function isUserValid(req,res){
+export function isUserValid(req, res) {
 
     const user = req.body.user;
 
-    if(!user){
+    if (!user) {
         res.status(401).json({
-            message : "Authentication required"
+            message: "Authentication required"
         })
         return false
     }
     return true
 }
 
-export function isAdmin(req,res){
+export function isAdmin(req, res) {
 
-    isUserValid(req,res);
-    
-    if(req.body.user.type != "admin"){
-         res.status(403).json({
-            message : "Only Admin can doing this task"
+    isUserValid(req, res);
+
+    if (req.body.user.type != "admin") {
+        res.status(403).json({
+            message: "Only Admin can doing this task"
         })
         return false
     }
