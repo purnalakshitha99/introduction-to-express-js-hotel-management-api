@@ -156,19 +156,25 @@ export function deleteRoomByParam(req,res){
     )
 }
 
-export function isAdminValid(req){
+export function isAdminValid(req,res){
 
-    const id = req.params.id
+    const id = req.params.id;
+
+    console.log("id is : "+id)
     const user = req.body.user;
 
     if(!user){
 
-        return false
+        return res.status(401).json({
+            message : "authentication required"
+        })
     }
     if(user.type != "admin"){
 
         console.log("********  "+user.type)
-        return false
+        return res.status(403).json({
+            message : "Cant access for Doing the Task"
+        })
     }
 
     return true
@@ -177,7 +183,7 @@ export function isAdminValid(req){
 
 export function updateRoom(req,res){
 
-    const adminValid = isAdminValid(req);
+    const adminValid = isAdminValid(req,res);
     const id = req.params.id;
 
     if(!adminValid){
