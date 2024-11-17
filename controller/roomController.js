@@ -2,12 +2,12 @@ import Room from "../model/room.js";
 
 export function createRoom(req, res) {
 
-    const validUser = isUserValid(req,res)
+    const validUser = isUserValid(req, res)
 
-    if(!validUser){
+    if (!validUser) {
         return
     }
-    
+
     const room = req.body;
     console.log(room)
 
@@ -36,15 +36,15 @@ export function createRoom(req, res) {
 
 export function getRooms(req, res) {
 
-    const validUser = isUserValid(req,res)
+    const validUser = isUserValid(req, res)
 
-    if(!validUser){
+    if (!validUser) {
         return
     }
 
     Room.find().then(
         (roomList) => {
-            
+
             if (roomList.length === 0) {
                 return res.status(404).json(
                     {
