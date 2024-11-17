@@ -1,22 +1,13 @@
 import Category from "../model/category.js";
+import { isAdmin,isUserValid } from './roomController.js';
 
 
 export function createCategory(req, res) {
 
-    const user = req.body.user;
+    const validAdmin = isAdmin(req, res)
 
-    if (user == null) {
-        return res.status(401).json({
-            message: "Please login to create a category item"
-        });
-    }
-
-    if (user.type != "admin") {
-        return res.status(403).json(
-            {
-                message: "cant access for create category"
-            }
-        )
+    if (!validAdmin) {
+        return
     }
 
     const category = req.body;
@@ -124,20 +115,10 @@ export function deleteCategory(req,res){
 
     const categoryName = req.body.name;
 
-    const user = req.body.user;
+    const validAdmin = isAdmin(req, res)
 
-    if (user == null) {
-        return res.status(403).json({
-            message: "Please login to delete a category item"
-        });
-    }
-
-    if (user.type != "admin") {
-        return res.status(403).json(
-            {
-                message: "cant access for create category"
-            }
-        )
+    if (!validAdmin) {
+        return
     }
 
     Category.findOneAndDelete({ name : categoryName}).then(
@@ -168,20 +149,10 @@ export function deleteCategoryByParam(req,res){
 
     console.log("category name : ",categoryName)
 
-    const user = req.body.user;
+    const validAdmin = isAdmin(req, res)
 
-    if (user == null) {
-        return res.status(403).json({
-            message: "Please login to delete a category item"
-        });
-    }
-
-    if (user.type != "admin") {
-        return res.status(403).json(
-            {
-                message: "cant access for create category"
-            }
-        )
+    if (!validAdmin) {
+        return
     }
 
     Category.findOneAndDelete({ name : categoryName}).then(
@@ -214,18 +185,10 @@ export function updateCategory(req,res){
     const updateData = req.body;
 
 
-    if (user == null) {
-        return res.status(403).json({
-            message: "Please login to delete a category item"
-        });
-    }
+    const validAdmin = isAdmin(req, res)
 
-    if (user.type != "admin") {
-        return res.status(403).json(
-            {
-                message: "cant access for create category"
-            }
-        )
+    if (!validAdmin) {
+        return
     }
     
     Category.findOneAndUpdate({name : name},updateData,{new: true, runValidators : true}).then(
