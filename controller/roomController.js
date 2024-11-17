@@ -46,18 +46,24 @@ export function createRoom(req, res) {
 
 export function getRooms(req, res) {
 
-    const user = req.body.user
+    
+    const validUser = isUserValid(req,res)
 
-    if (user == null) {
-        return res.status(401).json({
-            message: "Please login to create a room"
-        });
+    // if (user == null) {
+    //     return res.status(401).json({
+    //         message: "Please login to create a room"
+    //     });
+    // }
+
+    if(!validUser){
+        return
     }
 
 
     Room.find().then(
         (roomList) => {
-            if (!roomList) {
+            
+            if (roomList.length === 0) {
                 return res.status(404).json(
                     {
                         message: "Room empty"
