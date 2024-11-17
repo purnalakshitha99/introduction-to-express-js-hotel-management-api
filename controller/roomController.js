@@ -177,7 +177,7 @@ export function isAdminValid(req){
 
 export function updateRoom(req,res){
 
-    const adminValid = isAdminValid();
+    const adminValid = isAdminValid(req);
     const id = req.params.id;
 
     if(!adminValid){
