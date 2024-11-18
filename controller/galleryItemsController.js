@@ -33,9 +33,6 @@ export function postGalleryItem(req, res) {
             }
         });
 }
-
-
-
 export function getGalleryItem(req, res) {
 
     GalleryItem.find().then(
