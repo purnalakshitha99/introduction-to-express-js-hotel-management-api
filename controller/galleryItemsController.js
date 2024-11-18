@@ -117,21 +117,12 @@ export function deleteByName(req,res){
 export function updateGalleryItem(req,res){
 
     const name = req.params.name
-    const user = req.body.user;
     const updateData = req.body
      
-    if (user == null) {
-        return res.status(403).json({
-            message: "Please login to create a gallery item"
-        });
-    }
+    const validAdmin = isAdmin(req, res)
 
-    if(user.type != "admin"){
-        return res.status(403).json(
-            {
-                message : "cant access for create item"
-            }
-        )
+    if (!validAdmin) {
+        return
     }
 
     GalleryItem.findOneAndUpdate({name},updateData,{new : true, runValidators : true}).then(
