@@ -1,24 +1,16 @@
 
 import GalleryItem from "../model/galleryItems.js";
+import { isAdmin } from './roomController.js';
 
 export function postGalleryItem(req, res) {
-    const user = req.body.user;
-     
-    if (user == null) {
-        return res.status(403).json({
-            message: "Please login to create a gallery item"
-        });
+
+    const validAdmin = isAdmin(req, res)
+
+    if (!validAdmin) {
+        return
     }
 
-    if(user.type != "admin"){
-        return res.status(403).json(
-            {
-                message : "cant access for create item"
-            }
-        )
-    }
-
-    const galleryItems = req.body.item;
+    const galleryItems = req.body;
     console.log(galleryItems);
 
     const newGalleryItem = new GalleryItem(galleryItems);
