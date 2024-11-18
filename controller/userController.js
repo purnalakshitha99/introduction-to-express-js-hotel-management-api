@@ -205,3 +205,34 @@ export function deleteUser(req, res) {
         }
     )
 }
+
+export function isUserValid(req, res) {
+
+    const user = req.body.user;
+
+    if (!user) {
+        res.status(401).json({
+            message: "Authentication required"
+        })
+        return false
+    }
+    return true
+}
+
+export function isAdmin(req, res) {
+
+    const userValid = isUserValid(req, res);
+
+    if (!userValid){
+        return false
+    }
+
+
+    if (req.body.user.type != "admin") {
+        res.status(403).json({
+            message: "Only Admin can doing this task"
+        })
+        return false
+    }
+    return true
+}
