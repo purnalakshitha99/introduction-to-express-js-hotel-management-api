@@ -10,7 +10,5 @@ galleryItemRoute.get("/:name",getGalleryItemByName)
 galleryItemRoute.delete("/:name",deleteByName)
 galleryItemRoute.put("/:name",updateGalleryItem)
 
-
-
 export default galleryItemRoute;
 
