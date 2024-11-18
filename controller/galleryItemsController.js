@@ -36,31 +36,31 @@ export function postGalleryItem(req, res) {
 
 
 
-export function getGalleryItem(req,res){
+export function getGalleryItem(req, res) {
 
     GalleryItem.find().then(
-        (galleryItemList)=>{
+        (galleryItemList) => {
             res.json({
-                list:galleryItemList
+                list: galleryItemList
             })
         }
     )
 }
 
-export function getGalleryItemByName(req,res){
+export function getGalleryItemByName(req, res) {
 
     const name = req.params.name;
     const user = req.body.user;
 
-    if(!user){
+    if (!user) {
         return res.status(403).json({
-            message : "please login"
+            message: "please login"
         })
     }
 
-    GalleryItem.findOne({name}).then(
-        (galleryItem)=>{
-            if(!galleryItem){
+    GalleryItem.findOne({ name }).then(
+        (galleryItem) => {
+            if (!galleryItem) {
                 return res.status(404).json(
                     {
                         message: "gallery item not found"
@@ -68,81 +68,80 @@ export function getGalleryItemByName(req,res){
                 )
             }
             return res.json({
-                message : "Gallery item found",
-                galleryItem : galleryItem
+                message: "Gallery item found",
+                galleryItem: galleryItem
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
                 message: "internal server error",
-                details : err.message
+                details: err.message
             })
         }
     )
 }
 
-export function deleteByName(req,res){
+export function deleteByName(req, res) {
 
     const name = req.params.name
-    const user = req.body.user;
-     
+
     const validAdmin = isAdmin(req, res)
 
     if (!validAdmin) {
         return
     }
 
-    GalleryItem.findOneAndDelete({name}).then(
-        (galleryItem)=>{
-            if(!galleryItem){
+    GalleryItem.findOneAndDelete({ name }).then(
+        (galleryItem) => {
+            if (!galleryItem) {
                 return res.status(404).json({
-                    message : "Gallery item not found"
+                    message: "Gallery item not found"
                 })
             }
             return res.json({
-                message : "Delete successfully"
+                message: "Delete successfully"
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "delete failed",
-                details : err.message
+                message: "delete failed",
+                details: err.message
             })
         }
     )
 }
 
-export function updateGalleryItem(req,res){
+export function updateGalleryItem(req, res) {
 
     const name = req.params.name
     const updateData = req.body
-     
+
     const validAdmin = isAdmin(req, res)
 
     if (!validAdmin) {
         return
     }
 
-    GalleryItem.findOneAndUpdate({name},updateData,{new : true, runValidators : true}).then(
-        (updateGalleryItem)=>{
-            if(!updateGalleryItem){
+    GalleryItem.findOneAndUpdate({ name }, updateData, { new: true, runValidators: true }).then(
+        (updateGalleryItem) => {
+            if (!updateGalleryItem) {
                 return res.status(404).json({
-                    message : "Gallery item not found"
+                    message: "Gallery item not found"
                 })
             }
             return res.json({
-                message : "Gallery Item found",
-                updateData : updateGalleryItem
+                message: "Gallery Item found",
+                updateData: updateGalleryItem
             })
         }
-    
+
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "Gallery Item update failed",
-                details : err.message
+                message: "Gallery Item update failed",
+                details: err.message
             })
         }
     )
