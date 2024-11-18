@@ -179,7 +179,12 @@ export function isUserValid(req, res) {
 
 export function isAdmin(req, res) {
 
-    isUserValid(req, res);
+    const userValid = isUserValid(req, res);
+
+    if (!userValid){
+        return false
+    }
+
 
     if (req.body.user.type != "admin") {
         res.status(403).json({
