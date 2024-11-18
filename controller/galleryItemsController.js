@@ -1,6 +1,6 @@
 
 import GalleryItem from "../model/galleryItems.js";
-import { isAdmin } from './roomController.js';
+import { isAdmin,isUserValid } from "./userController.js";
 
 export function postGalleryItem(req, res) {
 
