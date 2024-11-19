@@ -8,7 +8,7 @@ roomRoute.get("/",getRooms);
 roomRoute.delete("/",deleteRoom);
 roomRoute.delete("/:id",deleteRoomByParam);
 roomRoute.put("/:id",updateRoom);
-roomRoute.get("/:id",roomById);
+roomRoute.get("/:id",roomById);//methanata danne api eha patthe controller eke param eka aran da ganna const eke name eka
 roomRoute.get("/by-category/:category",getRoomByCategory);
 
 
