@@ -35,6 +35,32 @@ export function createRoom(req, res) {
     )
 }
 
+export function roomById(req,res){
+
+    const id = req.params.id
+
+    Room.findOne({rooId : id}).then(
+        (result)=>{
+            if(!result){
+                return res.status(404).json({
+                    message : "room not found"
+                })
+            }
+            return res.json({
+                message : "room found",
+                result : result
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "failed to find",
+                detais : err.message
+            })
+        }
+    )
+}
+
 export function getRooms(req, res) {
 
     const validUser = isUserValid(req, res)
