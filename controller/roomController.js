@@ -37,10 +37,12 @@ export function createRoom(req, res) {
 
 export function roomById(req,res){
 
-    const id = req.params.id
+    const id = req.params.id;
+    console.log("room id : "+id)
 
-    Room.findOne({rooId : id}).then(
+    Room.findOne({roomId : id}).then(
         (result)=>{
+            console.log("result : "+result)
             if(!result){
                 return res.status(404).json({
                     message : "room not found"
