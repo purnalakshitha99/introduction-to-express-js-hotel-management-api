@@ -1,5 +1,5 @@
 import express from 'express'
-import { createRoom,deleteRoom,deleteRoomByParam,getRooms, updateRoom,roomById } from '../controller/roomController.js';
+import { createRoom,deleteRoom,deleteRoomByParam,getRooms, updateRoom, roomById, getRoomByCategory  } from '../controller/roomController.js';
 
 const roomRoute = express.Router();
 
@@ -9,6 +9,7 @@ roomRoute.delete("/",deleteRoom);
 roomRoute.delete("/:id",deleteRoomByParam);
 roomRoute.put("/:id",updateRoom);
 roomRoute.get("/:id",roomById);
+roomRoute.get("/by-category/:category",getRoomByCategory);
 
 
 

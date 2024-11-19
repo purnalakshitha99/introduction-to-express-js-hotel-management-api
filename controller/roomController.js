@@ -193,3 +193,30 @@ export function updateRoom(req, res) {
 
 }
 
+export function getRoomByCategory(req,res){
+
+    const category = req.params.category;
+
+    Room.find({category : category}).then(
+        (category)=>{
+            console.log("inside category : "+category)
+            if(category.length == 0){
+                return res.status(404).json({
+                    message : "Category Not Found"
+                })
+            }
+            return res.json({
+                message : "category found",
+                category : category
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "Find Failed",
+                details : err.message
+            })
+        }
+    )
+}
+
