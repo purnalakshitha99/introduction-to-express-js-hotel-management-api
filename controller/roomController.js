@@ -35,6 +35,34 @@ export function createRoom(req, res) {
     )
 }
 
+export function roomById(req,res){
+
+    const id = req.params.id;
+    console.log("room id : "+id)
+
+    Room.findOne({roomId : id}).then(
+        (result)=>{
+            console.log("result : "+result)
+            if(!result){
+                return res.status(404).json({
+                    message : "room not found"
+                })
+            }
+            return res.json({
+                message : "room found",
+                result : result
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "failed to find",
+                detais : err.message
+            })
+        }
+    )
+}
+
 export function getRooms(req, res) {
 
     const validUser = isUserValid(req, res)
@@ -163,5 +191,32 @@ export function updateRoom(req, res) {
         }
     )
 
+}
+
+export function getRoomByCategory(req,res){
+
+    const category = req.params.category;
+
+    Room.find({category : category}).then(
+        (category)=>{
+            console.log("inside category : "+category)
+            if(category.length == 0){
+                return res.status(404).json({
+                    message : "Category Not Found"
+                })
+            }
+            return res.json({
+                message : "category found",
+                category : category
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "Find Failed",
+                details : err.message
+            })
+        }
+    )
 }
 
