@@ -7,6 +7,10 @@ const bookingSchema = mongoose.Schema({
         required: true,
         unique: true
     },
+    roomId : {
+        type : Number,
+        required : true
+    },
     email: {
         type: String,
         required: true
