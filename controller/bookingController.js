@@ -2,11 +2,13 @@ import Booking from "../model/booking.js";
 
 export function createBooking(req,res){
 
-    var startingId = 1000;
+    const startingId = 1200;
 
     Booking.countDocuments({}).then(
         (count)=>{
             console.log(count);
+            const newId = "INV"+startingId+count;
+
         }
     )
 }
