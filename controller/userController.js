@@ -34,7 +34,8 @@ export function postUser(req, res) {
             .then(() => {
                 console.log("User created successfully:", user.email);
                 res.json({
-                    message: "User created successfully"
+                    message: "User created successfully",
+                    res: newUser
                 });
             })
             .catch((error) => {
@@ -103,19 +104,10 @@ export function loginUser(req, res) {
 
 export function getUser(req, res) {
 
-    const user = req.body.user
-    console.log(user)
+    const validUser = isAdmin(req,res);
 
-    if (user == null) {
-        return res.status(403).json({
-            message: "please login"
-        })
-    }
-
-    if (user.type != "admin") {
-        return res.status(403).json({
-            message: "only admin can get users"
-        })
+    if(!validUser){
+        return
     }
 
     console.log("get user")
@@ -136,28 +128,41 @@ export function getUser(req, res) {
     )
 }
 
-export function getUserByEmail(req,res){
+export function getUserByEmail(req, res) {
+
+    const validUser = isUserValid(req,res);
+
+    if(!validUser){
+        return
+    }
 
     const email = req.body.email;
 
-    User.findOne({ email: email}).then(
-        (user)=>{
-            if(!user){
+    User.findOne({ email: email }).then(
+        (user) => {
+            if (!user) {
                 return res.status(404).json({
-                    message : "user Not found"
+                    message: "user Not found"
                 })
             }
             return res.json({
-                message : "user found",
-                user : user
+                message: "user found",
+                user: user
             })
-            
+
         }
     )
 }
 
 
 export function updateUser(req, res) {
+
+    const validUser = isUserValid(req,res);
+
+    if(!validUser){
+        return
+    }
+
     const email = req.body.email;
     const updatedData = req.body; // The data to update
 
@@ -208,7 +213,7 @@ export function deleteUser(req, res) {
 
 export function isUserValid(req, res) {
 
-    const user = req.body.user;
+    const user = req.user;
 
     if (!user) {
         res.status(401).json({
@@ -223,12 +228,12 @@ export function isAdmin(req, res) {
 
     const userValid = isUserValid(req, res);
 
-    if (!userValid){
+    if (!userValid) {
         return false
     }
 
 
-    if (req.body.user.type != "admin") {
+    if (req.user.type != "admin") {
         res.status(403).json({
             message: "Only Admin can doing this task"
         })
@@ -242,7 +247,7 @@ export function isCustomer(req, res) {
 
     const userValid = isUserValid(req, res);
 
-    if (!userValid){
+    if (!userValid) {
         return false
     }
 

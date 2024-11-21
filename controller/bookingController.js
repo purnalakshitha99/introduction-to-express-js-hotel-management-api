@@ -105,3 +105,12 @@ export function getUserSpecificBookings(req,res){
         }
     )
 }
+
+// export function updateStatus(req,res){
+
+//     const validAdmin = isAdmin(req,res);
+
+
+
+//     const updateData = req.body;
+// }
