@@ -104,10 +104,6 @@ export function loginUser(req, res) {
 
 export function getUser(req, res) {
 
-    console.log("req uda")
-    const user = req.user
-    console.log(user)
-
     const validUser = isAdmin(req,res);
 
     if(!validUser){
@@ -133,6 +129,12 @@ export function getUser(req, res) {
 }
 
 export function getUserByEmail(req, res) {
+
+    const validUser = isUserValid(req,res);
+
+    if(!validUser){
+        return
+    }
 
     const email = req.body.email;
 
