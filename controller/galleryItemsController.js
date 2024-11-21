@@ -47,12 +47,11 @@ export function getGalleryItem(req, res) {
 export function getGalleryItemByName(req, res) {
 
     const name = req.params.name;
-    const user = req.body.user;
 
-    if (!user) {
-        return res.status(403).json({
-            message: "please login"
-        })
+    const validUser = isUserValid(req,res);
+
+    if(!validUser){
+        return
     }
 
     GalleryItem.findOne({ name }).then(
