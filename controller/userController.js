@@ -236,3 +236,21 @@ export function isAdmin(req, res) {
     }
     return true
 }
+
+export function isCustomer(req, res) {
+
+    const userValid = isUserValid(req, res);
+
+    if (!userValid){
+        return false
+    }
+
+
+    if (req.body.user.type != "customer") {
+        res.status(403).json({
+            message: "Only customer can doing this task"
+        })
+        return false
+    }
+    return true
+}
