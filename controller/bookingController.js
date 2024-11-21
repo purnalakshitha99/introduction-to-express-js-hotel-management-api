@@ -1,5 +1,5 @@
 import Booking from "../model/booking.js";
-import { isCustomer } from "./userController.js";
+import { isAdmin, isCustomer } from "./userController.js";
 
 export function createBooking(req,res){
 
@@ -42,6 +42,36 @@ export function createBooking(req,res){
                 }
             )
 
+        }
+    )
+}
+
+export function getBookings(req,res){
+
+    const validAdmin = isAdmin(req,res);
+
+    if(!validAdmin){
+        return
+    }
+
+    Booking.find().then(
+        (bookings)=>{
+            if(bookings.length == 0){
+                return res.status(404).json({
+                    message : "Booking is Empty"
+                })
+            }
+            return res.json({
+                message : "Booking found",
+                bookings : bookings
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "booking get failed",
+                details : err.message
+            })
         }
     )
 }
