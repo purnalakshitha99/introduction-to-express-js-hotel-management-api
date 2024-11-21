@@ -1,5 +1,5 @@
 import Category from "../model/category.js";
-import { isAdmin,isUserValid } from "./userController.js";
+import { isAdmin, isUserValid } from "./userController.js";
 
 
 export function createCategory(req, res) {
@@ -21,7 +21,7 @@ export function createCategory(req, res) {
             return res.json(
                 {
                     message: "Category creation Succuess",
-                    category : category
+                    category: category
                 }
             );
         }
@@ -62,7 +62,7 @@ export function findCategoryByName(req, res) {
 
     Category.findOne({ name: categoryName }).then(
         (category) => {
-            if(!category){
+            if (!category) {
                 return res.status(404).json({
                     message: "Category not found",
                     err: err.message
@@ -83,13 +83,13 @@ export function findCategoryByName(req, res) {
     )
 }
 
-export function findCategory(req,res){
+export function findCategory(req, res) {
 
     const name = req.params.name;
 
     Category.findOne({ name: name }).then(
         (category) => {
-            if(!category){
+            if (!category) {
                 return res.status(404).json({
                     message: "Category not found",
                     err: err.message
@@ -108,10 +108,10 @@ export function findCategory(req,res){
             })
         }
     )
-   
+
 }
 
-export function deleteCategory(req,res){
+export function deleteCategory(req, res) {
 
     const categoryName = req.body.name;
 
@@ -121,33 +121,33 @@ export function deleteCategory(req,res){
         return
     }
 
-    Category.findOneAndDelete({ name : categoryName}).then(
-        (category)=>{
-            if(!category){
+    Category.findOneAndDelete({ name: categoryName }).then(
+        (category) => {
+            if (!category) {
                 return res.status(404).json({
-                    message : "category not found , delete failed"
+                    message: "category not found , delete failed"
                 })
             }
             return res.json({
-                message : "category found , delete successfully"
+                message: "category found , delete successfully"
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "delete category failed",
-                details : err.message
+                message: "delete category failed",
+                details: err.message
             })
         }
     )
 
 }
 
-export function deleteCategoryByParam(req,res){
+export function deleteCategoryByParam(req, res) {
 
     const categoryName = req.params.name;
 
-    console.log("category name : ",categoryName)
+    console.log("category name : ", categoryName)
 
     const validAdmin = isAdmin(req, res)
 
@@ -155,22 +155,22 @@ export function deleteCategoryByParam(req,res){
         return
     }
 
-    Category.findOneAndDelete({ name : categoryName}).then(
-        (category)=>{
-            if(!category){
+    Category.findOneAndDelete({ name: categoryName }).then(
+        (category) => {
+            if (!category) {
                 return res.status(404).json({
-                    message : "category not found , delete failed"
+                    message: "category not found , delete failed"
                 })
             }
             return res.json({
-                message : "category found , delete successfully"
+                message: "category found , delete successfully"
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "delete category failed",
-                details : err.message
+                message: "delete category failed",
+                details: err.message
             })
         }
     )
@@ -178,38 +178,36 @@ export function deleteCategoryByParam(req,res){
 }
 
 
-export function updateCategory(req,res){
-    
+export function updateCategory(req, res) {
+
     const name = req.params.name;
-    const user = req.body.user;
     const updateData = req.body;
-
-
+    
     const validAdmin = isAdmin(req, res)
 
     if (!validAdmin) {
         return
     }
-    
-    Category.findOneAndUpdate({name : name},updateData,{new: true, runValidators : true}).then(
-        (updateCategory)=>{
-            if(!updateCategory){
+
+    Category.findOneAndUpdate({ name: name }, updateData, { new: true, runValidators: true }).then(
+        (updateCategory) => {
+            if (!updateCategory) {
                 return res.status(404).json({
-                    message : "category not found"
+                    message: "category not found"
                 })
             }
             return res.json({
-                message : "category found",
-                category : updateCategory
+                message: "category found",
+                category: updateCategory
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "category update failed",
-                details : err.message
+                message: "category update failed",
+                details: err.message
             })
         }
     )
-    
+
 }
