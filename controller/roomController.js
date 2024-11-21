@@ -1,5 +1,5 @@
 import Room from "../model/room.js";
-import { isAdmin,isUserValid } from "./userController.js";
+import { isAdmin, isUserValid } from "./userController.js";
 
 export function createRoom(req, res) {
 
@@ -35,29 +35,29 @@ export function createRoom(req, res) {
     )
 }
 
-export function roomById(req,res){
+export function roomById(req, res) {
 
     const id = req.params.id;
-    console.log("room id : "+id)
+    console.log("room id : " + id)
 
-    Room.findOne({roomId : id}).then(
-        (result)=>{
-            console.log("result : "+result)
-            if(!result){
+    Room.findOne({ roomId: id }).then(
+        (result) => {
+            console.log("result : " + result)
+            if (!result) {
                 return res.status(404).json({
-                    message : "room not found"
+                    message: "room not found"
                 })
             }
             return res.json({
-                message : "room found",
-                result : result
+                message: "room found",
+                result: result
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "failed to find",
-                detais : err.message
+                message: "failed to find",
+                detais: err.message
             })
         }
     )
@@ -128,7 +128,6 @@ export function deleteRoom(req, res) {
 export function deleteRoomByParam(req, res) {
 
     const id = req.params.id;
-    const user = req.body.user;
 
     const isValid = isAdmin(req, res)
 
@@ -193,28 +192,28 @@ export function updateRoom(req, res) {
 
 }
 
-export function getRoomByCategory(req,res){
+export function getRoomByCategory(req, res) {
 
     const category = req.params.category;
 
-    Room.find({category : category}).then(
-        (category)=>{
-            console.log("inside category : "+category)
-            if(category.length == 0){
+    Room.find({ category: category }).then(
+        (category) => {
+            console.log("inside category : " + category)
+            if (category.length == 0) {
                 return res.status(404).json({
-                    message : "Category Not Found"
+                    message: "Category Not Found"
                 })
             }
             return res.json({
-                message : "category found",
-                category : category
+                message: "category found",
+                category: category
             })
         }
     ).catch(
-        (err)=>{
+        (err) => {
             return res.status(500).json({
-                message : "Find Failed",
-                details : err.message
+                message: "Find Failed",
+                details: err.message
             })
         }
     )
