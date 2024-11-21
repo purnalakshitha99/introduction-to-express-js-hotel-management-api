@@ -239,6 +239,7 @@ export function isAdmin(req, res) {
 
 export function isCustomer(req, res) {
 
+
     const userValid = isUserValid(req, res);
 
     if (!userValid){
