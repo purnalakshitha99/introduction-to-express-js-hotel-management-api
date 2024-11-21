@@ -156,6 +156,13 @@ export function getUserByEmail(req, res) {
 
 
 export function updateUser(req, res) {
+
+    const validUser = isUserValid(req,res);
+
+    if(!validUser){
+        return
+    }
+
     const email = req.body.email;
     const updatedData = req.body; // The data to update
 
