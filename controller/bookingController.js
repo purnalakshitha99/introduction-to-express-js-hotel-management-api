@@ -106,11 +106,34 @@ export function getUserSpecificBookings(req,res){
     )
 }
 
-// export function updateStatus(req,res){
+export function updateStatus(req,res){
 
-//     const validAdmin = isAdmin(req,res);
+    const validAdmin = isAdmin(req,res);
 
+    if(!validAdmin){
+        return
+    }
 
+    const bookingId = req.params.bookingId
+    const updateData = req.body;
 
-//     const updateData = req.body;
-// }
+    Booking.findOneAndUpdate({bookingId : bookingId},updateData,{new: true, runValidators: true}).then(
+        (updatedBooking)=>{
+            if(!updatedBooking){
+                return res.status(404).json({
+                    message : "not found"
+                })
+            }
+            return res.json({
+                message: "status updated",
+                updatedBooking : updatedBooking
+            })
+        }
+    ).catch(
+        (err)=>{
+            return res.status(500).json({
+                message : "updated failier"
+            })
+        }
+    )
+}
