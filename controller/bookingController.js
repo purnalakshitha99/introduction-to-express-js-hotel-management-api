@@ -76,7 +76,8 @@ export function getBookings(req, res) {
 
 export function getUserSpecificBookings(req,res){
 
-    const email = req.user.email
+    const email = req.body.user.email;
+    console.log("usessr email : "+email)
     const validCustomer = isCustomer(req,res);
 
     if(!validCustomer){
