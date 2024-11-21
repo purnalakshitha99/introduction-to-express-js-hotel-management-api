@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 
             if (decode != null) {
                 req.body.user = decode
-                console.log(req.user)
+                console.log("::::::::::::"+decode)
                 next()
             }
         })
