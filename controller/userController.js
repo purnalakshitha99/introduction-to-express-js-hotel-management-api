@@ -191,6 +191,12 @@ export function updateUser(req, res) {
 
 export function deleteUser(req, res) {
 
+    const validAdmin = isAdmin(req,res);
+
+    if(!validAdmin){
+        return
+    }
+
     const email = req.body.email;
 
     User.deleteOne({ email: email }).then(
