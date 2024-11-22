@@ -82,14 +82,11 @@ mongoose.connect(connectiionString).then(
     }
 )
 
-
 app.use("/api/users", userRouter)
 app.use("/api/galleryItems", galleryItemRoute)
 app.use("/api/category", categoryRoute)
 app.use("/api/room", roomRoute)
 app.use("/api/booking", bookingRoute)
-
-
 
 app.listen(5000, (req, res) => {
     console.log("Server is Running on port 5000")
