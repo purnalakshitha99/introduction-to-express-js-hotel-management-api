@@ -54,23 +54,6 @@ app.use((req, res, next) => {
 
 });
 
-// app.use((req,res,next)=>{
-
-//     const token = req.header("Authorization")?.replace("Bearer","");
-
-//     if(token != null){
-//         jwt.verify(token,"secret",(err,decode)=>{
-
-//             if(decode != null){
-//                 req.user = decode
-//                 console.log(decode)
-//                 next()
-//             }
-//         })
-//     }
-// })
-
-
 
 mongoose.connect(connectiionString).then(
     () => {
