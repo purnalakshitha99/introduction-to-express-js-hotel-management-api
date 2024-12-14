@@ -78,6 +78,8 @@ export function getGalleryItemByName(req, res) {
     )
 }
 
+
+
 export function deleteByName(req, res) {
 
     const name = req.params.name
