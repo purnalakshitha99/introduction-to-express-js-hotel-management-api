@@ -66,7 +66,7 @@ export function getGalleryItemByName(req, res) {
             return res.json({
                 message: "Gallery item found",
                 galleryItem: galleryItem
-            })
+            })`1`
         }
     ).catch(
         (err) => {

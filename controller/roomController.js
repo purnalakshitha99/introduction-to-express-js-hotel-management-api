@@ -40,6 +40,8 @@ export function roomById(req, res) {
     const id = req.params.id;
     console.log("room id : " + id)
 
+
+    //methana roomId kiyana eka denna one model eke thiyena name eka
     Room.findOne({ roomId: id }).then(
         (result) => {
             console.log("result : " + result)
@@ -156,7 +158,8 @@ export function deleteRoomByParam(req, res) {
 }
 
 
-
+//me function  eke updateOne()  use karama eken return karanne
+//matchedCount,modified count ethakota eka check karala inn one nathhan methanadi ewana ona id ekak thibbth nathath result eka athulata ynw
 export function updateRoom(req, res) {
 
     const id = req.params.id
