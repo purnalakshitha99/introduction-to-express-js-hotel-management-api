@@ -258,7 +258,7 @@ export function isCustomer(req, res) {
     }
 
 
-    if (req.body.user.type != "customer") {
+    if (req.user.type != "customer") {
         res.status(403).json({
             message: "Only customer can doing this task"
         })
