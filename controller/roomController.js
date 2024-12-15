@@ -40,6 +40,8 @@ export function roomById(req, res) {
     const id = req.params.id;
     console.log("room id : " + id)
 
+
+    //methana roomId kiyana eka denna one model eke thiyena name eka
     Room.findOne({ roomId: id }).then(
         (result) => {
             console.log("result : " + result)
