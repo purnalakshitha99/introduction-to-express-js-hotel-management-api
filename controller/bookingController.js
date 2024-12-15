@@ -19,7 +19,7 @@ export function createBooking(req, res) {
             const newBooking = new Booking({
                 bookingId: newId,
                 roomId: req.body.roomId,
-                email: req.body.user.email,
+                email: req.user.email,
                 startDate: req.body.startDate,
                 endDate: req.body.endDate
             })
