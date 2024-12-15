@@ -10,7 +10,7 @@ export function createBooking(req, res) {
     }
 
     const startingId = 1200;
-
+//methana count docment kiyana eken booking schema eke thiyena row count eka enawa
     Booking.countDocuments({}).then(
         (count) => {
             console.log(count);
