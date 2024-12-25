@@ -15,9 +15,7 @@ const app = express()
 
 app.use(bodyParser.json())  //middleware
 
-
 const connectiionString = process.env.MONGO_URL;
-
 
 console.log("Mongo URL:", connectiionString);
 
@@ -27,7 +25,6 @@ app.use((req, res, next) => {
     const token = req.header("Authorization")?.replace("Bearer ", "");  //methanadi authentication header ekak thiyen req ekaka Bearer kotasa iwath kara ithuru kalla const token ekata replace kara gani
 
     if (token != null) {
-
 
         jwt.verify(token, process.env.JWT_KEY, (err, decode) => {
 
