@@ -2,9 +2,6 @@ import Booking from "../model/booking.js";
 import Room from "../model/room.js";
 import { isAdmin, isCustomer } from "./userController.js";
 
-
-
-
 export function createBooking(req, res) {
     const validCustomer = isCustomer(req, res);
 
