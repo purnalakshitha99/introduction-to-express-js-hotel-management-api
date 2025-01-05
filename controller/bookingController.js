@@ -2,63 +2,6 @@ import Booking from "../model/booking.js";
 import Room from "../model/room.js";
 import { isAdmin, isCustomer } from "./userController.js";
 
-// export function createBooking(req, res) {
-
-//     const validCustomer = isCustomer(req, res)
-
-//     if (!validCustomer) {
-//         return
-//     }
-
-//     const startingId = 1200;
-// //methana count docment kiyana eken booking schema eke thiyena row count eka enawa
-//     Booking.countDocuments({}).then(
-//         (count) => {
-//             console.log(count);
-//             const newId = "INV" + startingId + count;
-
-//             Room.findOne({roomId : req.body.roomId}).then(
-//                 (room)=>{ 
-//                     if(!result){
-//                         return res.status(404).json({
-//                             message : "room not found"
-//                         })
-//                     }
-
-//                     console.log("room id is :::::::: "+room.roomId)
-//                     const newBooking = new Booking({
-//                         bookingId: newId,
-//                         roomId: room.roomId,
-//                         email: req.user.email,
-//                         startDate: req.body.startDate,
-//                         endDate: req.body.endDate
-//                     })
-        
-//                     newBooking.save().then(
-//                         (result) => {
-//                             return res.json({
-//                                 message: "successfully saved",
-//                                 result: result
-//                             })
-//                         }
-//                     ).catch(
-//                         (err) => {
-//                             res.status(500).json({
-//                                 message: "booking failed",
-//                                 details: err.message
-//                             })
-//                         }
-//                     )
-
-//                 }
-//             )
-//             })
-
-//         }
-//     )
-// }
-
-
 export function createBooking(req, res) {
     const validCustomer = isCustomer(req, res);
 
@@ -82,7 +25,7 @@ export function createBooking(req, res) {
             console.log("room id is :::::::: " + room.roomId);
             const newBooking = new Booking({
                 bookingId: newId,
-                roomId: room.roomId,
+                roomId: req.body.roomId,
                 email: req.user.email,
                 startDate: req.body.startDate,
                 endDate: req.body.endDate,
