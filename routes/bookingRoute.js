@@ -8,5 +8,4 @@ bookingRoute.get("/",getBookings);
 bookingRoute.get("/userSpecific",getUserSpecificBookings);
 bookingRoute.put("/updateStatus/:bookingId",updateStatus)
 
-
 export default bookingRoute;
