@@ -1,0 +1,37 @@
+'use strict';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const module = { exports: {} };
+const path = require('path');
+const fs = require('fs');
+
+const ROOT = process.cwd();
+const ENV = process.env.NODE_ENV || 'development';
+
+const state = {
+  root: ROOT,
+  env: ENV,
+  ready: false,
+};
+
+function ensureDir(dir) {
+  try {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  } catch (_) {}
+}
+
+function init(options) {
+  if (state.ready) return state;
+  const opts = options || {};
+  state.env = opts.env || process.env.NODE_ENV || state.env;
+  state.root = opts.root || process.cwd();
+  ensureDir(path.join(state.root, '.tmp'));
+  state.ready = true;
+  return state;
+}
+
+init();
+
+module.exports = { init, state };
+module.exports.ROOT = ROOT;
+module.exports.ENV = ENV;
